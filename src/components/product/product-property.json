@@ -1,0 +1,56 @@
+{
+  "collectionName": "components_product_product_properties",
+  "info": {
+    "displayName": "ProductProperty",
+    "icon": "emotionHappy",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "length": {
+      "type": "integer"
+    },
+    "diametr": {
+      "type": "integer"
+    },
+    "color": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::color.color"
+    },
+    "mechanism": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mechanism.mechanism"
+    },
+    "brand": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::brand.brand"
+    },
+    "weight": {
+      "type": "integer"
+    },
+    "country": {
+      "type": "customField",
+      "customField": "plugin::country-select.country"
+    },
+    "numberSpokes": {
+      "required": true,
+      "type": "integer"
+    },
+    "material": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::material.material"
+    },
+    "guarante": {
+      "type": "string"
+    },
+    "model": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::model.model"
+    }
+  }
+}

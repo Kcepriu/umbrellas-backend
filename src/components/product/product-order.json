@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_product_product_orders",
+  "info": {
+    "displayName": "ProductOrder",
+    "icon": "command",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product"
+    },
+    "count": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "totalSum": {
+      "type": "decimal",
+      "required": true
+    }
+  }
+}

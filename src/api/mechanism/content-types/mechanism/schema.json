@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mechanisms",
+  "info": {
+    "singularName": "mechanism",
+    "pluralName": "mechanisms",
+    "displayName": "Mechanism",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "minLength": 3
+    },
+    "uuid": {
+      "type": "customField",
+      "customField": "plugin::field-uuid.uuid"
+    }
+  }
+}
