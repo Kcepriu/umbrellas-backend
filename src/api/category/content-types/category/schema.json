@@ -34,16 +34,16 @@
     "uuid": {
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       },
       "type": "customField",
       "customField": "plugin::field-uuid.uuid"
     },
-    "descriptiom": {
+    "description": {
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       },
       "type": "richtext"

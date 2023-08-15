@@ -9,15 +9,17 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node-telegram-bot-api": "^0.61.7"
+  },
   "dependencies": {
     "@offset-dev/strapi-calendar": "^0.0.10",
     "@strapi/plugin-color-picker": "^4.12.4",
-    "@strapi/plugin-documentation": "^4.12.4",
     "@strapi/plugin-i18n": "4.12.1",
     "@strapi/plugin-seo": "^1.9.2",
     "@strapi/plugin-users-permissions": "4.12.1",
     "@strapi/strapi": "4.12.1",
+    "node-telegram-bot-api": "^0.61.0",
     "pg": "8.8.0",
     "strapi-auto-uuid": "^0.0.8",
     "strapi-plugin-country-select": "^1.0.2",

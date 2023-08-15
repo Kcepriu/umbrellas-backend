@@ -4,6 +4,21 @@
 
 import { factories } from "@strapi/strapi";
 
+// import TelegramBot from "node-telegram-bot-api";
+
+// const token = process.env.TELEGRAM_TOKEN;
+
+// const bot = new TelegramBot(token, { polling: true });
+
+// bot.onText(/\/echo (.+)/, (msg, match) => {
+//   const chatId = msg.chat.id;
+//   console.log("🚀 ~ chatId:", chatId);
+//   const resp = match[1]; // the captured "whatever"
+
+//   // send back the matched "whatever" to the chat
+//   bot.sendMessage(chatId, resp);
+// });
+
 export default factories.createCoreController(
   "api::order.order",
   ({ strapi }) => ({
@@ -23,6 +38,9 @@ export default factories.createCoreController(
         .find(sanitizedQueryParams);
 
       const sanitizedResults = await this.sanitizeOutput(results, ctx);
+
+      // const res = await bot.sendMessage(488752587, "Received your message");
+      // console.log("🚀 ~ res:", res);
 
       return this.transformResponse(sanitizedResults, { pagination });
     },

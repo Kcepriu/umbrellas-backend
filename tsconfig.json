@@ -6,10 +6,12 @@
     "rootDir": "."
   },
   "include": [
+    "custom.d.ts",
     "./",
     "./**/*.ts",
     "./**/*.js",
-    "src/**/*.json"
+    "src/**/*.json",
+    "src/**/*.svg"
   ],
   "exclude": [
     "node_modules/",

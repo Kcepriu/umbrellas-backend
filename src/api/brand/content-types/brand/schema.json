@@ -30,29 +30,24 @@
     "uuid": {
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       },
       "type": "customField",
       "customField": "plugin::field-uuid.uuid"
     },
-    "icon": {
+    "logo": {
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
+      "allowedTypes": ["images", "files", "videos", "audios"],
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       }
     },
-    "descrition": {
+    "description": {
       "pluginOptions": {
         "i18n": {
           "localized": true
