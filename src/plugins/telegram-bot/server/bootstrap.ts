@@ -1,5 +1,6 @@
-import { Strapi } from '@strapi/strapi';
+import { Strapi } from "@strapi/strapi";
+import botServices from "./bot/bot.services";
 
-export default ({ strapi }: { strapi: Strapi }) => {
-  // bootstrap phase
+export default async ({ strapi }: { strapi: Strapi }) => {
+  strapi.plugin("telegram-bot").telegramBot = botServices({ strapi });
 };

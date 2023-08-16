@@ -1,10 +1,10 @@
 {
-  "name": "Telegram-bot",
+  "name": "telegram-bot",
   "version": "0.0.0",
-  "description": "This is the description of the plugin.",
+  "description": "Telegram bot for sending messages.",
   "strapi": {
-    "name": "telegram-bot",
-    "description": "Description of telegram-bot plugin",
+    "name": "Telegram-bot",
+    "description": "Telegram bot for sending messages.",
     "kind": "plugin"
   },
   "dependencies": {
