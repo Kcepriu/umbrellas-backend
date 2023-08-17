@@ -1,7 +1,7 @@
 export default [
   {
     method: "GET",
-    path: "/",
+    path: "/find",
     handler: "telegramController.find",
     config: {
       policies: [],
@@ -11,7 +11,7 @@ export default [
 
   {
     method: "GET",
-    path: "/:chatId",
+    path: "/find/:chatId",
     handler: "telegramController.findByChatId",
     config: {
       policies: [],
@@ -21,7 +21,7 @@ export default [
 
   {
     method: "POST",
-    path: "/",
+    path: "/create",
     handler: "telegramController.create",
     config: {
       policies: [],
@@ -31,7 +31,7 @@ export default [
 
   {
     method: "DELETE",
-    path: "/:id",
+    path: "/delete/:id",
     handler: "telegramController.delete",
     config: {
       policies: [],
@@ -41,7 +41,7 @@ export default [
 
   {
     method: "PUT",
-    path: "/:id",
+    path: "/update/:id",
     handler: "telegramController.update",
     config: {
       policies: [],
@@ -52,7 +52,17 @@ export default [
   {
     method: "POST",
     path: "/send-message",
-    handler: "telegramController.sendMessageToAdmins",
+    handler: "botController.sendMessageToAdmins",
+    config: {
+      policies: [],
+      auth: false,
+    },
+  },
+
+  {
+    method: "GET",
+    path: "/me",
+    handler: "botController.getMe",
     config: {
       policies: [],
       auth: false,

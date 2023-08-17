@@ -58,14 +58,4 @@ export default ({ strapi }: { strapi: Strapi }) => ({
       ctx.throw(500, err.message);
     }
   },
-
-  async sendMessageToAdmins(ctx) {
-    try {
-      ctx.body = await strapi
-        .plugin("telegram-bot")
-        .telegramBot.sendMessageToAdmins(ctx.request.body.message);
-    } catch (err) {
-      ctx.throw(500, err.message);
-    }
-  },
 });

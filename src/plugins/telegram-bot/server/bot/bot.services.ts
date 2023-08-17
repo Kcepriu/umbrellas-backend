@@ -27,11 +27,15 @@ class Bot {
       async (msg) => await this.handleOnText(msg, false)
     );
 
+    // this.bot.on("polling_error", (error) => {
+    //   console.log(error.code); // => 'EFATAL'
+    // });
+
     // Add more listeners and commands as needed
   }
 
   private async handleOnText(msg: Message, isStart = false) {
-    if (!this.bot) throw "No connect bot";
+    if (!this.bot) throw new Error("No connect bot");
 
     const { text = "" } = msg;
     const { id: chatId, first_name = "", last_name = "" } = msg.chat;
@@ -74,7 +78,7 @@ class Bot {
   }
 
   public async sendMessageToAdmins(message: string) {
-    if (!this.bot) throw "No connect bot";
+    if (!this.bot) throw new Error("No connect bot");
 
     const adminChats = await strapi
       .plugin("telegram-bot")
@@ -93,9 +97,30 @@ class Bot {
   }
 
   public async sendMessage(chatId: string, message: string) {
-    if (!this.bot) throw "No connect bot";
+    if (!this.bot) throw new Error("No connect bot");
 
     await this.bot.sendMessage(chatId, message);
+  }
+
+  public async isPolling() {
+    if (!this.bot) throw new Error("No connect bot");
+    const result = await this.bot.isPolling();
+    return { result };
+  }
+
+  public async isError() {
+    if (!this.bot) throw new Error("No connect bot");
+    console.log("is Error");
+
+    return { result: true };
+  }
+
+  public async getMe() {
+    if (!this.bot) throw new Error("No connect bot");
+
+    const result = await this.bot.getMe();
+
+    return result;
   }
 }
 
