@@ -7,7 +7,9 @@ class Bot {
 
   constructor(private strapi: Strapi, private token: string) {
     this.bot = this.token
-      ? new TelegramBot(this.token, { polling: true })
+      ? new TelegramBot(this.token, {
+          polling: { autoStart: true, params: { timeout: 30 } },
+        })
       : null;
 
     this.connectListeners();
@@ -105,6 +107,12 @@ class Bot {
   public async isPolling() {
     if (!this.bot) throw new Error("No connect bot");
     const result = await this.bot.isPolling();
+    return { result };
+  }
+
+  public async getUpdates() {
+    if (!this.bot) throw new Error("No connect bot");
+    const result = await this.bot.getUpdates();
     return { result };
   }
 

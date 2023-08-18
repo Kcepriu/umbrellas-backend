@@ -68,4 +68,24 @@ export default [
       auth: false,
     },
   },
+
+  {
+    method: "GET",
+    path: "/is-polling",
+    handler: "botController.isPolling",
+    config: {
+      policies: [],
+      auth: false,
+    },
+  },
+
+  // {
+  //   method: "GET",
+  //   path: "/get-updates",
+  //   handler: "botController.getUpdates",
+  //   config: {
+  //     policies: [],
+  //     auth: false,
+  //   },
+  // },
 ];

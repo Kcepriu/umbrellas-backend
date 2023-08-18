@@ -19,6 +19,14 @@ export default ({ strapi }: { strapi: Strapi }) => ({
     }
   },
 
+  async getUpdates(ctx) {
+    try {
+      ctx.body = await strapi.plugin("telegram-bot").telegramBot.getUpdates();
+    } catch (err) {
+      ctx.throw(500, err.message);
+    }
+  },
+
   async getMe(ctx) {
     try {
       ctx.body = await strapi.plugin("telegram-bot").telegramBot.getMe();
