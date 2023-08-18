@@ -1,6 +1,6 @@
 export default {
-  "telegram-bot": {
-    enabled: true,
-    resolve: "./src/plugins/telegram-bot",
-  },
+  // "plugin-telegram-bot": {
+  //   enabled: true,
+  //   resolve: "./src/plugins/telegram-bot",
+  // },
 };
