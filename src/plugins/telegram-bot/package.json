@@ -1,15 +1,16 @@
 {
-  "name": "@strapi/plugin-telegram-bot",
-  "version": "1.0.0",
+  "name": "plugin-telegram-bot",
+  "version": "1.0.8",
+  "access": "public",
   "description": "Telegram bot for sending messages.",
   "strapi": {
-    "name": "Telegram-bot",
+    "name": "plugin-telegram-bot",
     "description": "Telegram bot for sending messages.",
     "kind": "plugin"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kcepriu/strapi-plugin-send-to-telegram.git"
+    "url": "git@github.com:Kcepriu/strapi-plugin-send-to-telegram.git"
   },
   "dependencies": {
     "@strapi/design-system": "^1.6.3",
@@ -41,13 +42,18 @@
     "styled-components": "^5.3.6",
     "@strapi/strapi": "^4.0.0"
   },
+  "resolutions": {
+    "yargs": "^17.2.1"
+  },
   "author": {
-    "name": "Serhii Kostiuchenko"
+    "name": "Serhii Kostiuchenko",
+    "email": "kcepriu@gmail.com",
+    "url": "https://www.linkedin.com/in/serhii-kostiuchenko"
   },
   "maintainers": [
     {
       "name": "Serhii Kostiuchenko",
-      "email": "mailto:serhii.kostuchenko@gmail.com",
+      "email": "kcepriu@gmail.com",
       "url": "https://www.linkedin.com/in/serhii-kostiuchenko"
     }
   ],
@@ -57,7 +63,8 @@
   },
   "scripts": {
     "develop": "tsc -p tsconfig.server.json -w",
-    "build": "tsc -p tsconfig.server.json"
+    "build": "tsc -p tsconfig.server.json",
+    "build-admin": "tsc -p tsconfig.json"
   },
   "license": "MIT"
 }
