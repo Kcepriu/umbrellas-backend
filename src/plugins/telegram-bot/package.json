@@ -1,6 +1,6 @@
 {
   "name": "telegram-bot",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Telegram bot for sending messages.",
   "strapi": {
     "name": "Telegram-bot",
@@ -11,15 +11,19 @@
     "@strapi/design-system": "^1.6.3",
     "@strapi/helper-plugin": "^4.6.0",
     "@strapi/icons": "^1.6.3",
+    "node-telegram-bot-api": "^0.61.0",
     "prop-types": "^15.7.2",
-    "react-icons": "^4.10.1"
+    "react-icons": "^4.10.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@strapi/typescript-utils": "^4.6.0",
+    "@types/node-telegram-bot-api": "^0.61.7",
     "@types/react": "^17.0.53",
     "@types/react-dom": "^18.0.28",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
+    "@types/uuid": "^9.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.4",
@@ -33,11 +37,11 @@
     "styled-components": "^5.3.6"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Serhii Kostiuchenko"
   },
   "maintainers": [
     {
-      "name": "A Strapi developer"
+      "name": "Serhii Kostiuchenko"
     }
   ],
   "engines": {
