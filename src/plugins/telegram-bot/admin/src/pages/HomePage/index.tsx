@@ -12,6 +12,7 @@ import {
   Button,
   EmptyStateLayout,
   Link,
+  Alert,
 } from "@strapi/design-system";
 
 import { LoadingIndicatorPage } from "@strapi/helper-plugin";
@@ -25,6 +26,7 @@ import ChatsCount from "../../components/ChatsCount/ChatsCount";
 import QuestionYesNo from "../../components/QuestionYesNo/QuestionYesNo";
 
 import { IChat } from "../../../../types/bot.types";
+import { useShowAlerts, TypeAlarm } from "../../hooks/useShowAlerts";
 
 const HomePage: FC = () => {
   const [chats, setChats] = useState<IChat[]>([]);
@@ -33,6 +35,8 @@ const HomePage: FC = () => {
   const [isShowQuestionDelete, setIsShowQuestionDelete] =
     useState<boolean>(false);
   const [chatToProcess, setChatToProcess] = useState<IChat | null>(null);
+
+  const { Alerts, handleAddAlarm } = useShowAlerts();
 
   const fetchData = async () => {
     if (isLoading === false) setIsLoading(true);
@@ -43,7 +47,7 @@ const HomePage: FC = () => {
       const response = await botRequest.geChats();
       setChats(response);
     } catch {
-      console.log("Error fetch data");
+      handleAddAlarm({ type: TypeAlarm.danger, text: "Error fetch data" });
       setBotName("");
       setChats([]);
     } finally {
@@ -63,7 +67,7 @@ const HomePage: FC = () => {
           oldChats.filter((chat) => chat.id !== response.id)
         );
     } catch {
-      console.log("Error delete chat");
+      handleAddAlarm({ type: TypeAlarm.danger, text: "Error delete chat" });
     } finally {
       setIsLoading(false);
       setChatToProcess(null);
@@ -88,6 +92,7 @@ const HomePage: FC = () => {
 
   return (
     <Layout>
+      <Alerts />
       <BaseHeaderLayout
         title="Telegram Bot Plugin"
         subtitle="Send message to Telegram"

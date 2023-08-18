@@ -5,7 +5,7 @@ export default [
     handler: "telegramController.find",
     config: {
       policies: [],
-      auth: false,
+      // auth: false,
     },
   },
 
@@ -15,7 +15,7 @@ export default [
     handler: "telegramController.findByChatId",
     config: {
       policies: [],
-      auth: false,
+      // auth: false,
     },
   },
 
@@ -25,7 +25,7 @@ export default [
     handler: "telegramController.create",
     config: {
       policies: [],
-      auth: false,
+      // auth: false,
     },
   },
 
@@ -35,7 +35,7 @@ export default [
     handler: "telegramController.delete",
     config: {
       policies: [],
-      auth: false,
+      // auth: false,
     },
   },
 
@@ -45,7 +45,7 @@ export default [
     handler: "telegramController.update",
     config: {
       policies: [],
-      auth: false,
+      // auth: false,
     },
   },
 
@@ -65,7 +65,7 @@ export default [
     handler: "botController.getMe",
     config: {
       policies: [],
-      auth: false,
+      // auth: false,
     },
   },
 
@@ -75,7 +75,7 @@ export default [
     handler: "botController.isPolling",
     config: {
       policies: [],
-      auth: false,
+      // auth: false,
     },
   },
 

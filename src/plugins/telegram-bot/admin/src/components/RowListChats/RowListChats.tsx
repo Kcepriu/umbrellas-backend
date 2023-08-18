@@ -1,10 +1,11 @@
 import React, { FC, useState } from "react";
-import { Tr, Td } from "@strapi/design-system";
+import { Tr, Td, Alert } from "@strapi/design-system";
 import { Typography, Switch, TextInput } from "@strapi/design-system";
 import ActionsButtonRowChat from "../ActionsButtonRowChat/ActionsButtonRowChat";
 import botRequest from "../../api/botRequest";
 
 import { IChat } from "../../../../types/bot.types";
+import { useShowAlerts, TypeAlarm } from "../../hooks/useShowAlerts";
 
 interface IProps {
   chat: IChat;
@@ -37,6 +38,8 @@ const RowListChats: FC<IProps> = ({ chat, deleteChat }) => {
     chat.isSendInformation
   );
 
+  const { Alerts, handleAddAlarm } = useShowAlerts();
+
   // * Handle
   const handleSaveChat = async () => {
     const { id, ...newChat } = { ...chat, clientName, isSendInformation };
@@ -47,7 +50,7 @@ const RowListChats: FC<IProps> = ({ chat, deleteChat }) => {
       const response = await botRequest.updateChat(id, newChat);
       if (response) setIsEdit(false);
     } catch {
-      console.log("Error update chat");
+      handleAddAlarm({ type: TypeAlarm.danger, text: "Error save data" });
     }
   };
 
@@ -60,40 +63,43 @@ const RowListChats: FC<IProps> = ({ chat, deleteChat }) => {
   };
 
   return (
-    <Tr>
-      <Td>
-        <Typography textColor="neutral800">{chat.id}</Typography>
-      </Td>
-      <Td>
-        <Typography textColor="neutral800">{chat.chatId}</Typography>
-      </Td>
-      <Td>
-        {isEdit ? (
-          <ChatTextInput
-            value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
+    <>
+      <Alerts />
+      <Tr>
+        <Td>
+          <Typography textColor="neutral800">{chat.id}</Typography>
+        </Td>
+        <Td>
+          <Typography textColor="neutral800">{chat.chatId}</Typography>
+        </Td>
+        <Td>
+          {isEdit ? (
+            <ChatTextInput
+              value={clientName}
+              onChange={(e) => setClientName(e.target.value)}
+            />
+          ) : (
+            <Typography textColor="neutral800">{clientName}</Typography>
+          )}
+        </Td>
+        <Td>
+          <Switch
+            selected={isSendInformation}
+            onChange={handleIsSendInformation}
+            disabled={!isEdit}
           />
-        ) : (
-          <Typography textColor="neutral800">{clientName}</Typography>
-        )}
-      </Td>
-      <Td>
-        <Switch
-          selected={isSendInformation}
-          onChange={handleIsSendInformation}
-          disabled={!isEdit}
-        />
-      </Td>
+        </Td>
 
-      <Td>
-        <ActionsButtonRowChat
-          isEdit={isEdit}
-          setIsEdit={setIsEdit}
-          handleSaveChat={handleSaveChat}
-          handleDeleteChat={handleDeleteChat}
-        />
-      </Td>
-    </Tr>
+        <Td>
+          <ActionsButtonRowChat
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
+            handleSaveChat={handleSaveChat}
+            handleDeleteChat={handleDeleteChat}
+          />
+        </Td>
+      </Tr>
+    </>
   );
 };
 
