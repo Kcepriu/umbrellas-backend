@@ -1,10 +1,6 @@
-export default ({ env }) => ({
-  rest: {
-    excludedFields: ["createdAt, updatedAt, publishedAt"],
-    models: {
-      products: {
-        excludedFields: ["createdAt"],
-      },
-    },
+export default {
+  "telegram-bot": {
+    enabled: true,
+    resolve: "./src/plugins/telegram-bot",
   },
-});
+};
