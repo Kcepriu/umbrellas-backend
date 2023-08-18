@@ -1,8 +1,8 @@
 {
   "name": "umbrellas-bac",
   "private": true,
-  "version": "0.1.0",
-  "description": "Show Umbrellas. BackEnd part",
+  "version": "0.2.0",
+  "description": "Show Umbrellas. Backend part",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
