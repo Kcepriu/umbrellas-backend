@@ -112,7 +112,7 @@
       "component": "product.product-property",
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       }
     },
