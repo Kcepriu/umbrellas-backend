@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-08-15T17:20:36.321Z"
+    "x-generation-date": "2023-08-19T13:14:07.351Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -99,7 +99,7 @@
           "uuid": {
             "type": "string"
           },
-          "icon": {
+          "logo": {
             "type": "array",
             "items": {
               "oneOf": [
@@ -113,7 +113,7 @@
               "example": "string or id"
             }
           },
-          "descrition": {
+          "description": {
             "type": "string"
           },
           "locale": {
@@ -139,7 +139,7 @@
               "uuid": {
                 "type": "string"
               },
-              "icon": {
+              "logo": {
                 "type": "array",
                 "items": {
                   "oneOf": [
@@ -153,7 +153,7 @@
                   "example": "string or id"
                 }
               },
-              "descrition": {
+              "description": {
                 "type": "string"
               },
               "locale": {
@@ -289,7 +289,7 @@
           "uuid": {
             "type": "string"
           },
-          "icon": {
+          "logo": {
             "type": "object",
             "properties": {
               "data": {
@@ -913,7 +913,7 @@
               }
             }
           },
-          "descrition": {
+          "description": {
             "type": "string"
           },
           "createdAt": {
@@ -1012,7 +1012,7 @@
           "uuid": {
             "type": "string"
           },
-          "descriptiom": {
+          "description": {
             "type": "string"
           },
           "locale": {
@@ -1041,7 +1041,7 @@
               "uuid": {
                 "type": "string"
               },
-              "descriptiom": {
+              "description": {
                 "type": "string"
               },
               "locale": {
@@ -1180,7 +1180,7 @@
           "uuid": {
             "type": "string"
           },
-          "descriptiom": {
+          "description": {
             "type": "string"
           },
           "createdAt": {
@@ -4257,7 +4257,7 @@
                                                               "uuid": {
                                                                 "type": "string"
                                                               },
-                                                              "descriptiom": {
+                                                              "description": {
                                                                 "type": "string"
                                                               },
                                                               "createdAt": {
@@ -5221,7 +5221,7 @@
                                                                 "uuid": {
                                                                   "type": "string"
                                                                 },
-                                                                "icon": {
+                                                                "logo": {
                                                                   "type": "object",
                                                                   "properties": {
                                                                     "data": {
@@ -5363,7 +5363,7 @@
                                                                     }
                                                                   }
                                                                 },
-                                                                "descrition": {
+                                                                "description": {
                                                                   "type": "string"
                                                                 },
                                                                 "createdAt": {
@@ -6290,7 +6290,7 @@
                         "uuid": {
                           "type": "string"
                         },
-                        "descriptiom": {
+                        "description": {
                           "type": "string"
                         },
                         "createdAt": {
@@ -8669,7 +8669,7 @@
                       "uuid": {
                         "type": "string"
                       },
-                      "icon": {
+                      "logo": {
                         "type": "object",
                         "properties": {
                           "data": {
@@ -8811,7 +8811,7 @@
                           }
                         }
                       },
-                      "descrition": {
+                      "description": {
                         "type": "string"
                       },
                       "createdAt": {
@@ -9200,7 +9200,7 @@
                                     "uuid": {
                                       "type": "string"
                                     },
-                                    "descriptiom": {
+                                    "description": {
                                       "type": "string"
                                     },
                                     "createdAt": {
@@ -10415,7 +10415,7 @@
                                       "uuid": {
                                         "type": "string"
                                       },
-                                      "icon": {
+                                      "logo": {
                                         "type": "object",
                                         "properties": {
                                           "data": {
@@ -10557,7 +10557,7 @@
                                           }
                                         }
                                       },
-                                      "descrition": {
+                                      "description": {
                                         "type": "string"
                                       },
                                       "createdAt": {
