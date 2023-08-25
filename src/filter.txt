@@ -1,0 +1,32 @@
+"name": "Парасолька 3",
+"description": "Так собі парасолька. Але треба брати м",
+"price": 10,
+"quantity": "12",
+"code": "555",
+"active": true,
+"slug": "parasolka-3",
+"categories": []
+
+"propertys": {
+                    "id": 1,
+                    "length": 5,
+                    "weight": 10,
+                    "diametr": 150,
+                    "country": "TD",
+                    "numberSpokes": 10,
+                    "guarante": null
+                },
+
+
+{{URL}}/products?populate[categories]=*&populate[images]=*&populate[propertys][populate]=*&filters[categories][id][$eq]=4
+{{URL}}/orders?populate[0]=productOrder.product&populate[1]=productOrder.product.images
+{{URL}}/products?filters[propertys][brand][id][$eq]=4
+
+
+
+{{URL}}/products?populate=*&filters[categories][slug][$eq]=pryami
+{{URL}}/products?populate=*&filters[categories][id][$eq]=1
+
+{{URL}}/products/parasolka-2?populate[categories]=1&populate[images]=true&populate[propertys]=1
+{{URL}}/products/parasolka-1?populate[*]=1&populate[propertys][brand][0]=1
+{{URL}}/products/parasolka-1?populate[propertys][populate][color]=1                

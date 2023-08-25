@@ -20,19 +20,11 @@
       "type": "string",
       "required": true,
       "unique": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "minLength": 2
     },
     "uuid": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
+      "pluginOptions": {},
       "type": "customField",
       "customField": "plugin::field-uuid.uuid"
     },
@@ -40,20 +32,25 @@
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": ["images", "files", "videos", "audios"],
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
+      "allowedTypes": ["images"],
+      "pluginOptions": {}
     },
     "description": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "richtext"
+    },
+    "slug": {
+      "pluginOptions": {},
+      "type": "uid",
+      "targetField": "title",
+      "required": true,
+      "index": true
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": true,
+      "pluginOptions": {},
+      "component": "shared.seo"
     }
   }
 }
