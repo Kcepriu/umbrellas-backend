@@ -5,6 +5,31 @@ import { Strapi } from "@strapi/strapi";
  */
 
 import { factories } from "@strapi/strapi";
+interface IFilter {
+  fieldName: string;
+  operation: string;
+  value: string;
+  arrayFieldName?: string[];
+}
+interface IParam {
+  strapi: Strapi;
+  uid: string;
+  selectFieldName: string;
+  filter: IFilter;
+}
+
+interface IJoinTable {
+  name: string;
+  joinColumn: {}[];
+  inverseJoinColumn: {}[];
+  pivotColumns: string[];
+}
+interface IAttributesField {
+  type: string;
+  columnName?: string;
+  target?: string;
+  joinTable?: IJoinTable;
+}
 
 export default factories.createCoreController(
   "api::product.product",
@@ -27,7 +52,22 @@ export default factories.createCoreController(
       const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
       // ! ---------------------------------
-      await getAllValue(strapi, "api::product.product", "price");
+      // fieldName: "categories.slug",
+      const filterСategoriy = {
+        fieldName: "slug",
+        operation: "=",
+        value: "dityachi",
+      };
+
+      await getAllValue({
+        strapi,
+        uid: "api::product.product",
+        selectFieldName: "propertys.model.*",
+        filter: filterСategoriy,
+      });
+      // selectFieldName: "propertys.length",
+      // selectFieldName: "propertys.model.*",
+      // selectFieldName: "price",
       // ! ---------------------------------
 
       return this.transformResponse(sanitizedResults, { pagination });
@@ -60,47 +100,218 @@ export default factories.createCoreController(
 // uid: api::product.product
 // fieldResult:
 //    1. price
-//    2. property.length
-//    3. property.color.id property.color.*
+//    2. propertys.length
+//    3. propertys.color.id property.color.*
 //  filters:
 //    1. {fieldName: "name",
 //        operation: "like";
 //        value: "%парасоль%",}
-//    2. {fieldName: "caregory.slug",
+//    2. {fieldName: "categories.slug",
 //        operation: "=";
 //        value: "dityachi",}
+async function getAllValue(param: IParam) {
+  // const { strapi, uid, selectFieldName, filter } = param;
+  // const { attributes, tableName } = strapi.db.metadata.get(uid);
 
-async function getAllValue(strapi: Strapi, uid: string, fieldName) {
-  const filterСategoriy = {
-    fieldName: "slug",
-    value: "dityachi",
-  };
-  const { attributes, tableName } = strapi.db.metadata.get(uid);
-  // console.log(attributes, tableName);
-  console.log("tableName", tableName);
-  console.log(attributes["categories"]);
+  //* Add Select and From
+  const from = addSelectFrom({ ...param }, 1);
+  // * add JOIN and WHERE
+  const allQuery = addSectionWhere({ ...param }, from, 1);
 
-  const type = attributes[fieldName].type;
-  if (type === "relation") return [];
-  // !
-  // Якщо не relation, тоіз вказаної таблиці повертаємо це поле
+  console.log("🚀 ~ allQuery:", allQuery.toSQL());
 
-  const selectStatement = addDistinct(strapi.db.connection, "p1.quantity")
-    .from(`products as p1`)
-    .join(`products_categories_links as pct`, `p1.id`, `pct.product_id`)
-    .join(`categories as c`, `pct.category_id`, `c.id`)
-    .where(`c.${filterСategoriy.fieldName}`, filterСategoriy.value);
+  // const result = await allQuery.then();
+  const result = [];
+  console.log("🚀 ~ result:", result);
 
-  const result = await selectStatement.then();
-
-  console.log("🚀 ~ selectStatement:", result);
-
-  // return selectStatement;
-  return [];
+  return result;
 }
 
+function addSelectFromSingle(strapi: Strapi, tableName, fieldName, aliasName) {
+  const queryBuilder = addDistinct(
+    strapi.db.connection,
+    `${aliasName}.${fieldName}`
+  );
+
+  return addFrom(queryBuilder, `${tableName} as ${aliasName}`);
+}
+
+function addJoinToSelectFrom(
+  queryBuilder,
+  atributesSelectField,
+  tableName,
+  numTable
+) {
+  const joinTable = atributesSelectField.joinTable.name;
+  let nameJoinColumn = atributesSelectField.joinTable.inverseJoinColumn.name;
+  let nameReferencedJoinColumn =
+    atributesSelectField.joinTable.inverseJoinColumn.referencedColumn;
+
+  queryBuilder = addJoin(
+    queryBuilder,
+    `${joinTable} as t${numTable + 1}`,
+    `t${numTable + 1}.${nameJoinColumn}`,
+    `t${numTable + 2}.${nameReferencedJoinColumn}`
+  );
+
+  nameJoinColumn = atributesSelectField.joinTable.joinColumn.name;
+  nameReferencedJoinColumn =
+    atributesSelectField.joinTable.joinColumn.referencedColumn;
+
+  queryBuilder = addJoin(
+    queryBuilder,
+    `${tableName} as t${numTable}`,
+    `t${numTable}.${nameReferencedJoinColumn}`,
+    `t${numTable + 1}.${nameJoinColumn}`
+  );
+
+  return queryBuilder;
+}
+
+function addSelectFromWithRelation(param: IParam, numTable: number) {
+  const { strapi, uid, selectFieldName } = param;
+  const arraySelectFieldName = selectFieldName.split(".");
+  const { attributes, tableName } = strapi.db.metadata.get(uid);
+
+  const atributesSelectField = attributes[arraySelectFieldName[0]];
+
+  if (atributesSelectField.type !== "relation")
+    throw new Error("Error create query from filter");
+
+  const nextUid = atributesSelectField.target;
+  const newSelectFieldName = arraySelectFieldName.slice(1).join(".");
+
+  let queryBuilder = addSelectFrom(
+    { ...param, uid: nextUid, selectFieldName: newSelectFieldName },
+    numTable + 2
+  );
+
+  // JOIN
+
+  return addJoinToSelectFrom(
+    queryBuilder,
+    atributesSelectField,
+    tableName,
+    numTable
+  );
+}
+
+function addSelectFrom(param: IParam, numTable: number) {
+  const { strapi, uid, selectFieldName } = param;
+  const arraySelectFieldName = selectFieldName.split(".");
+  const { tableName } = strapi.db.metadata.get(uid);
+
+  if (arraySelectFieldName.length <= 1) {
+    return addSelectFromSingle(
+      strapi,
+      tableName,
+      arraySelectFieldName[0],
+      `t${numTable}`
+    );
+  }
+
+  return addSelectFromWithRelation(param, numTable);
+}
+
+function addJoinToAddSectionWhere(
+  param: IParam,
+  queryBuilder,
+  numTable: number
+) {
+  const { strapi, filter } = param;
+  const { fieldName } = filter;
+  let { uid } = param;
+  let arraySelectFieldName = fieldName.split(".");
+  let inverseJoinColumn = { name: "", referencedColumn: "" };
+
+  while (arraySelectFieldName.length > 0 || uid) {
+    const whereField = arraySelectFieldName.shift();
+    const { attributes, tableName } = strapi.db.metadata.get(uid);
+
+    const atributesSelectField = attributes[whereField];
+    console.log("🚀 ~ atributesSelectField:", atributesSelectField);
+    uid = atributesSelectField.target;
+
+    // first ralation
+    if (numTable > 1) {
+      queryBuilder = addJoin(
+        queryBuilder,
+        `${tableName} as tw${numTable}`,
+        `tw${numTable}.${inverseJoinColumn.referencedColumn}`,
+        `tw${numTable - 1}.${inverseJoinColumn.name}`
+      );
+      if (!atributesSelectField.joinTable) break;
+      numTable++;
+    }
+
+    // second  ralation
+    const joinTable = atributesSelectField.joinTable.name;
+    const nameJoinColumn = atributesSelectField.joinTable.joinColumn.name;
+    const nameReferencedJoinColumn =
+      atributesSelectField.joinTable.joinColumn.referencedColumn;
+
+    if (numTable === 1) {
+      queryBuilder = addJoin(
+        queryBuilder,
+        `${joinTable} as tw${numTable}`,
+        `tw${numTable}.${nameJoinColumn}`,
+        `t${numTable}.${nameReferencedJoinColumn}`
+      );
+    } else {
+      queryBuilder = addJoin(
+        queryBuilder,
+        `${joinTable} as tw${numTable}`,
+        `tw${numTable}.${nameJoinColumn}`,
+        `tw${numTable - 1}.${nameReferencedJoinColumn}`
+      );
+    }
+
+    numTable++;
+    inverseJoinColumn = atributesSelectField.joinTable.inverseJoinColumn;
+  }
+  return numTable;
+}
+
+function addSectionWhere(param: IParam, queryBuilder, numTable: number) {
+  const { filter } = param;
+
+  const { fieldName, operation, value } = filter;
+
+  let arraySelectFieldName = fieldName.split(".");
+  let whereField = arraySelectFieldName.at(-1);
+
+  let aliasNameFieldWheree = "t";
+  if (arraySelectFieldName.length > 1) {
+    numTable = addJoinToAddSectionWhere(param, queryBuilder, numTable);
+
+    aliasNameFieldWheree = "tw";
+  }
+
+  queryBuilder.where(
+    `${aliasNameFieldWheree}${numTable}.${whereField}`,
+    operation,
+    value
+  );
+
+  return queryBuilder;
+}
+
+// * ------
 function addDistinct(queryBuilder, fieldName) {
   return queryBuilder.distinct(fieldName);
+}
+
+function addFrom(queryBuilder, tableName) {
+  return queryBuilder.from(tableName);
+}
+
+function addJoin(
+  queryBuilder,
+  tableName: string,
+  fieldLeft: string,
+  fieldRight: string
+) {
+  return queryBuilder.join(tableName, fieldLeft, fieldRight);
 }
 
 // const selectStatement = await strapi.db.connection
@@ -122,6 +333,7 @@ function addDistinct(queryBuilder, fieldName) {
 //   .select("cppp.length")
 //   .from(`components_product_product_properties as cppp`)
 //   .join(`products_components as pc`, `pc.component_id`, `cppp.id`)
+
 //   .join(`products_categories_links as pct`, `pc.entity_id`, `pct.product_id`)
 //   .join(`categories as c`, `pct.category_id`, `c.id`)
 //   .where(`pc.field`, "propertys")
@@ -142,32 +354,3 @@ function addDistinct(queryBuilder, fieldName) {
 //           "propertys"
 //         );
 //       }
-
-async function testDb(strapi: Strapi) {
-  const { attributes, tableName } = strapi.db.metadata.get(
-    "api::product.product"
-  );
-  //"api::product.product"
-  // console.log("🚀 ~ attributes:", attributes);
-  const joinTable = attributes["propertys"].joinTable;
-  console.log("🚀 ~ joinTable:", joinTable);
-  // const joinColumn = joinTable.joinColumn.name;
-  // const invJoinColumn = joinTable.inverseJoinColumn.name;
-
-  // const toStageId = "id";
-  // const fromStageId = 1;
-
-  // const selectStatement = await strapi.db.connection
-  //   .select({ [joinColumn]: "t1.id", [invJoinColumn]: toStageId })
-  //   .from(`${tableName} as t1`)
-  //   .leftJoin(`${joinTable.name} as t2`, `t1.id`, `t2.${joinColumn}`)
-  //   .where(`t2.${invJoinColumn}`, fromStageId);
-
-  // const selectStatement = await strapi.db.connection
-  //   .select({ [joinColumn]: "t1.id" })
-  //   .from(`${tableName} as t1`)
-  //   .leftJoin(`${joinTable.name} as t2`, `t1.id`, `t2.${joinColumn}`)
-  //   .where(`t2.${invJoinColumn}`, fromStageId);
-
-  // console.log("🚀 ~ selectStatement:", selectStatement);
-}
