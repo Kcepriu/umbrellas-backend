@@ -54,17 +54,18 @@ export default factories.createCoreController(
       // ! ---------------------------------
       // fieldName: "categories.slug",
       const filterСategoriy = {
-        fieldName: "slug",
+        fieldName: "categories.slug",
         operation: "=",
-        value: "dityachi",
+        value: "cholovichi",
       };
 
-      await getAllValue({
+      const mres = await getAllValueForFilter({
         strapi,
         uid: "api::product.product",
         selectFieldName: "propertys.model.*",
         filter: filterСategoriy,
       });
+      console.log("🚀 ~ mres:", mres);
       // selectFieldName: "propertys.length",
       // selectFieldName: "propertys.model.*",
       // selectFieldName: "price",
@@ -109,7 +110,7 @@ export default factories.createCoreController(
 //    2. {fieldName: "categories.slug",
 //        operation: "=";
 //        value: "dityachi",}
-async function getAllValue(param: IParam) {
+async function getAllValueForFilter(param: IParam) {
   // const { strapi, uid, selectFieldName, filter } = param;
   // const { attributes, tableName } = strapi.db.metadata.get(uid);
 
@@ -118,11 +119,7 @@ async function getAllValue(param: IParam) {
   // * add JOIN and WHERE
   const allQuery = addSectionWhere({ ...param }, from, 1);
 
-  console.log("🚀 ~ allQuery:", allQuery.toSQL());
-
-  // const result = await allQuery.then();
-  const result = [];
-  console.log("🚀 ~ result:", result);
+  const result = await allQuery.then();
 
   return result;
 }

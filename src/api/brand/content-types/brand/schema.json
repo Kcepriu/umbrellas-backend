@@ -40,11 +40,9 @@
       "type": "richtext"
     },
     "slug": {
-      "pluginOptions": {},
       "type": "uid",
       "targetField": "title",
-      "required": true,
-      "index": true
+      "required": true
     },
     "seo": {
       "type": "component",
