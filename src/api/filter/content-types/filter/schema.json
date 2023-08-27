@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "filters",
+  "info": {
+    "singularName": "filter",
+    "pluralName": "filters",
+    "displayName": "Filter",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fieldName": {
+      "type": "string",
+      "required": true
+    },
+    "uidTable": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "exampleSearchParam": {
+      "type": "string",
+      "required": true
+    },
+    "uid": {
+      "type": "customField",
+      "customField": "plugin::field-uuid.uuid"
+    }
+  }
+}

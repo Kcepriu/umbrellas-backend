@@ -1,0 +1,74 @@
+"name": "Парасолька 3",
+"description": "Так собі парасолька. Але треба брати м",
+"price": 10,
+"quantity": "12",
+"code": "555",
+"active": true,
+"slug": "parasolka-3",
+"categories": []
+
+"propertys": {
+                    "id": 1,
+                    "length": 5,
+                    "weight": 10,
+                    "diametr": 150,
+                    "country": "TD",
+                    "numberSpokes": 10,
+                    "guarante": null
+                },
+
+
+{{URL}}/products?populate[categories]=*&populate[images]=*&populate[propertys][populate]=*&filters[categories][id][$eq]=4
+{{URL}}/orders?populate[0]=productOrder.product&populate[1]=productOrder.product.images
+{{URL}}/products?filters[propertys][brand][id][$eq]=4
+
+
+
+{{URL}}/products?populate=*&filters[categories][slug][$eq]=pryami
+{{URL}}/products?populate=*&filters[categories][id][$eq]=1
+
+{{URL}}/products/parasolka-2?populate[categories]=1&populate[images]=true&populate[propertys]=1
+{{URL}}/products/parasolka-1?populate[*]=1&populate[propertys][brand][0]=1
+{{URL}}/products/parasolka-1?populate[propertys][populate][color]=1                
+
+// example query
+// const selectStatement = await strapi.db.connection
+//   .distinct("m.*")
+//   .from(`models as m`)
+//   .join(
+//     `components_product_product_properties_model_links as pc`,
+//     `pc.model_id`,
+//     `m.id`
+//   )
+//   .join(
+//     `products_categories_links as pct`,
+//     `pc.product_property_id`,
+//     `pct.product_id`
+//   )
+//   .join(`categories as c`, `pct.category_id`, `c.id`);
+
+// const selectStatement = await strapi.db.connection
+//   .select("cppp.length")
+//   .from(`components_product_product_properties as cppp`)
+//   .join(`products_components as pc`, `pc.component_id`, `cppp.id`)
+
+//   .join(`products_categories_links as pct`, `pc.entity_id`, `pct.product_id`)
+//   .join(`categories as c`, `pct.category_id`, `c.id`)
+//   .where(`pc.field`, "propertys")
+//   .andWhere("pc.component_type", "product.product-property")
+//   .groupBy("cppp.length");
+
+// const selectStatement = await strapi.db.connection
+//   .select("p1.quantity")
+//   .from(`products as p1`)
+//   .join(`products_categories_links as pct`, `p1.id`, `pct.product_id`)
+//   .join(`categories as c`, `pct.category_id`, `c.id`)
+//   .groupBy("p1.quantity");
+
+// function () {
+//         this.on(`pc.component_id`, "=", `cppp.id`).on(
+//           "pc.field",
+//           "=",
+//           "propertys"
+//         );
+//       }
