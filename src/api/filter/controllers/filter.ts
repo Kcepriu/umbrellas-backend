@@ -7,10 +7,19 @@ import { factories } from "@strapi/strapi";
 export default factories.createCoreController(
   "api::filter.filter",
   ({ strapi }) => ({
-    async findAll(ctx) {
-      const entries = await strapi.db.query("api::filter.filter").findMany({});
+    async findAllFilters(ctx) {
+      try {
+        const sanitizedQueryParams = await this.sanitizeQuery(ctx);
+        const results = await strapi
+          .service("api::filter.filter")
+          .findAllFilters(sanitizedQueryParams);
 
-      ctx.body = entries;
+        const sanitizedResults = await this.sanitizeOutput(results, ctx);
+
+        return this.transformResponse(sanitizedResults, {});
+      } catch (err) {
+        ctx.throw(500, err.message);
+      }
     },
   })
 );
