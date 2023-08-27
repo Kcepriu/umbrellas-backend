@@ -18,7 +18,7 @@ export default factories.createCoreService(
 
       //categories.slug
       const filterCondition = {
-        fieldName: "categories",
+        fieldName: "categories.slug",
         operation: "=",
         value: categories,
       };
